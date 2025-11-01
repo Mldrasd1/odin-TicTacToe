@@ -1,3 +1,5 @@
+let p1;
+let p2;
 const Game = {
   Gameboard: {
     gameboardarray: [
@@ -71,8 +73,7 @@ const Game = {
 function playermaker(name, marker) {
   return { name, marker };
 }
-const p1 = playermaker("mouloud", "X");
-const p2 = playermaker("limam", "O");
+
 const items = document.querySelectorAll(".item");
 for (let i = 0; i < items.length; i++) {
   items[i].textContent =
@@ -96,11 +97,16 @@ items.forEach((item, index) => {
     if (gameOver) {
       let winner = checkwinner();
       if (winner !== "draw") {
-        alert("the winner is " + winner);
+        if (winner == "X") alert("the winner is " + p1.name);
+        else alert("the winner is " + p2.name);
       } else {
         alert("draw");
       }
     }
+    const whoplaysnow = document.querySelector(".divv");
+    whoplaysnow.innerHTML = `<h4>${
+      FirstMove === "X" ? p1.name : p2.name
+    } plays now</h4>`;
   });
 });
 function checkwinner() {
@@ -153,3 +159,18 @@ function checkwinner() {
 
   return "draw";
 }
+const btn = document.querySelector(".btn");
+btn.addEventListener("click", (e) => {
+  const player11 = document.querySelector("#p1");
+  const player22 = document.querySelector("#p2");
+  let player1 = player11.value;
+  let player2 = player22.value;
+  console.log(player1, player2);
+  p1 = playermaker(player1, "X");
+  p2 = playermaker(player2, "O");
+  console.log(p1, p2);
+  const whoplaysnow = document.querySelector(".divv");
+  whoplaysnow.innerHTML = `<h4>${
+    FirstMove === "X" ? p1.name : p2.name
+  } plays now</h4>`;
+});
